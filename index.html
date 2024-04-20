@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resistance Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: 100px;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+        .dark-mode .container {
+            background-color: #504c4c;
+        }
+        .newCalBut{
+            background-color: #88b6e7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <h2>Resistance Calculator</h2>
+
+    <div id="inputs">
+        <div class="input-group">
+            <label for="resistance1">Resistance 1 (ohms):</label>
+            <input type="number" class="resistance-input">
+        </div>
+        <div class="input-group">
+            <label for="resistance2">Resistance 2 (ohms):</label>
+            <input type="number" class="resistance-input">
+        </div>
+    </div>
+
+    <button onclick="addNewInput()">New</button>
+
+    <label for="connectionType">Connection Type:</label>
+    <select id="connectionType">
+        <option value="parallel">Parallel</option>
+        <option value="series">Series</option>
+    </select>
+<br><br>
+    <button onclick="calculateResistance()">Calculate</button>
+    <button class="newCalBut" onclick="newCalculation()">New Calculation</button>
+
+    <div id="result"></div>
+
+    <button onclick="toggleDarkMode()" id="darkModeToggle"><i class="fas fa-sun"></i></button>
+</div>
+
+<script>
+    // Initialize dark mode from local storage
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+    }
+
+    function addNewInput() {
+        var inputsDiv = document.getElementById('inputs');
+        var newInputGroup = document.createElement('div');
+        newInputGroup.className = 'input-group';
+        newInputGroup.innerHTML = '<label for="resistance" class="new-label">Resistance (ohms):</label><input type="number" class="resistance-input">';
+        inputsDiv.appendChild(newInputGroup);
+    }
+
+    function calculateResistance() {
+        var inputs = document.querySelectorAll('.resistance-input');
+        var resistances = Array.from(inputs).map(input => parseFloat(input.value));
+        var connectionType = document.getElementById('connectionType').value;
+        var result;
+
+        if (connectionType === 'parallel') {
+            result = 1 / resistances.reduce((accumulator, resistance) => accumulator + (1 / resistance), 0);
+        } else {
+            result = resistances.reduce((accumulator, resistance) => accumulator + resistance, 0);
+        }
+
+        document.getElementById('result').innerText = 'Resultant Resistance: ' + result.toFixed(2) + ' ohms';
+    }
+
+    function newCalculation() {
+        // Check if dark mode is enabled from local storage and apply
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+            document.body.classList.remove('dark-mode');
+            document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        location.reload();
+    }
+
+    function toggleDarkMode() {
+        var body = document.body;
+        var darkModeToggle = document.getElementById('darkModeToggle');
+        var icon = darkModeToggle.querySelector('i');
+
+        if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+</script>
+
+</body>
+</html>
