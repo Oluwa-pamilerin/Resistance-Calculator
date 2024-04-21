@@ -148,7 +148,7 @@
             result = resistances.reduce((accumulator, resistance) => accumulator + resistance, 0);
         }
 
-        document.getElementById('result').innerText = 'Resultant Resistance: ' + result.toFixed(2) + ' ohms';
+        document.getElementById('result').innerHTML = 'Resultant Resistance: <b><b>' + result.toFixed(2) + '</b></b> ohms';
     }
 
     function newCalculation() {
