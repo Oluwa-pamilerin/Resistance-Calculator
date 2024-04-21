@@ -55,6 +55,13 @@
         .dark-mode .container {
             background-color: #504c4c;
         }
+        .newCalcBut{
+            background-color: #4a92e0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
 
         /* Mobile responsiveness */
         @media (max-width: 600px) {
@@ -88,13 +95,17 @@
         <option value="parallel">Parallel</option>
         <option value="series">Series</option>
     </select>
-
+<br><br>
     <button onclick="calculateResistance()">Calculate</button>
-    <button onclick="newCalculation()">New Calculation</button>
+    <button class="newCalcBut" onclick="newCalculation()">New Calculation</button>
 
     <div id="result"></div>
 
     <button onclick="toggleDarkMode()" id="darkModeToggle"><i class="fas fa-sun"></i></button>
+
+    <footer>
+        Built with ❤️ by OTS
+    </footer>
 </div>
 
 <script>
