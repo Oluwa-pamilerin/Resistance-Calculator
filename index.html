@@ -12,7 +12,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
         .container {
-            max-width: 600px;
+            max-width: 100%;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -24,7 +24,8 @@
             margin-bottom: 10px;
         }
         input[type="number"] {
-            width: 100px;
+            width: 100%;
+            max-width: 300px;
             margin-bottom: 10px;
             padding: 8px;
             border-radius: 4px;
@@ -54,8 +55,13 @@
         .dark-mode .container {
             background-color: #504c4c;
         }
-        .newCalBut{
-            background-color: #88b6e7;
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            input[type="number"] {
+                width: 100%;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -82,9 +88,9 @@
         <option value="parallel">Parallel</option>
         <option value="series">Series</option>
     </select>
-<br><br>
+
     <button onclick="calculateResistance()">Calculate</button>
-    <button class="newCalBut" onclick="newCalculation()">New Calculation</button>
+    <button onclick="newCalculation()">New Calculation</button>
 
     <div id="result"></div>
 
