@@ -10,12 +10,13 @@
             color: #333;
             padding: 20px;
             transition: background-color 0.3s, color 0.3s;
+            position: relative;
         }
         .container {
             max-width: 100%;
             margin: 0 auto;
             background-color: #fff;
-            padding: 20px;
+            padding: 40px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -49,11 +50,11 @@
             font-size: 18px;
         }
         .dark-mode {
-            background-color: #333;
+            background-color: #080808;
             color: #fff;
         }
         .dark-mode .container {
-            background-color: #504c4c;
+            background-color: #333333;
         }
         .newCalcBut{
             background-color: #4a92e0;
@@ -62,6 +63,13 @@
             text-align: center;
             margin-top: 20px;
         }
+        #darkModeToggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            margin: 20px;
+        }
+
 
         /* Mobile responsiveness */
         @media (max-width: 600px) {
@@ -69,12 +77,18 @@
                 width: 100%;
                 max-width: 100%;
             }
+            #darkModeToggle {
+                top: 10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="container" id="app">
+    <button onclick="toggleDarkMode()" id="darkModeToggle"><i class="fas fa-sun"></i></button>
+<br>
     <h2>Resistance Calculator</h2>
 
     <div id="inputs">
@@ -95,13 +109,12 @@
         <option value="parallel">Parallel</option>
         <option value="series">Series</option>
     </select>
-<br><br>
+    <br><br>
+
     <button onclick="calculateResistance()">Calculate</button>
     <button class="newCalcBut" onclick="newCalculation()">New Calculation</button>
 
     <div id="result"></div>
-
-    <button onclick="toggleDarkMode()" id="darkModeToggle"><i class="fas fa-sun"></i></button>
 
     <footer>
         Built with ❤️ by OTS
