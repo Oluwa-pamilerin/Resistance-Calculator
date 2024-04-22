@@ -32,6 +32,10 @@
             border-radius: 4px;
             border: 1px solid #ccc;
         }
+        select{
+            margin: 5px;
+            padding-inline: 3px;
+        }
         button {
             padding: 10px 20px;
             background-color: #007BFF;
@@ -101,24 +105,25 @@
     <div id="inputs">
         <div class="input-group">
             <label for="resistance1">Resistance 1 (ohms):</label>
-            <input type="number" class="resistance-input">
+            <input type="number" id="firstResistance" class="resistance-input">
         </div>
-        <div class="input-group">
+        <!-- <br><br> -->
+        <!-- <div class="input-group">
             <label for="resistance2">Resistance 2 (ohms):</label>
             <input type="number" class="resistance-input">
-        </div>
+        </div> -->
     </div>
-
-    <button onclick="addNewInput()">New</button>
-
-    <label for="connectionType">Connection Type:</label>
+    <span for="connectionType">Connection Type:</span>
     <select id="connectionType">
         <option value="parallel">Parallel</option>
         <option value="series">Series</option>
     </select>
-    <br><br>
+    <div>
+        <button onclick="addNewInput()">Add Resistance</button>
+    </div>
 
-    <button onclick="calculateResistance()">Calculate</button>
+
+    <button onclick="processResult()">Calculate</button>
     <button class="newCalcBut" onclick="newCalculation()">New Calculation</button>
 
     <div id="result"></div>
@@ -142,14 +147,22 @@
         var inputsDiv = document.getElementById('inputs');
         var newInputGroup = document.createElement('div');
         newInputGroup.className = 'input-group';
-        newInputGroup.innerHTML = '<label for="resistance" class="new-label">Resistance (ohms):</label><input type="number" class="resistance-input">';
+        newInputGroup.innerHTML = '<label for="resistance" class="new-label elementToRemove">Resistance (ohms):</label><input type="number" class="resistance-input elementToRemove">';
         inputsDiv.appendChild(newInputGroup);
     }
 
-    function calculateResistance() {
+    function dataCollection() {
         var inputs = document.querySelectorAll('.resistance-input');
         var resistances = Array.from(inputs).map(input => parseFloat(input.value));
         var connectionType = document.getElementById('connectionType').value;
+        return [connectionType, resistances]
+    }
+    
+    function calculateResistance() {
+        data = dataCollection()
+        connectionType = data[0]
+        resistances = data[1]
+
         var result;
 
         if (connectionType === 'parallel') {
@@ -157,6 +170,21 @@
         } else {
             result = resistances.reduce((accumulator, resistance) => accumulator + resistance, 0);
         }
+        return result;
+    }
+    
+    function processResult() {
+        result = calculateResistance()
+
+        // remove all resistance apart from first resistance
+        var elementToRemove = document.querySelectorAll('.elementToRemove');
+        elementToRemove.forEach((element)=>{
+            element.remove();
+        });
+
+        // set first resistance to resultant resistance value so as to continue calculation
+        var firstResistance = document.getElementById('firstResistance')
+        firstResistance.value = result
 
         document.getElementById('result').innerHTML = 'Resultant Resistance: <b><b>' + result.toFixed(2) + '</b></b> ohms';
     }
