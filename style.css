@@ -1,0 +1,139 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #e0e0e0 ;
+    background-repeat: no-repeat;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container { 
+    margin-block: 20px;
+    min-width: 30%;
+    background: #e0e0e0;
+    background-repeat: no-repeat;
+    padding: 40px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 38px;
+    box-shadow:  45px 45px 86px #bebebe, -45px -45px 86px #ffffff;
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+    border-color: inherit;
+    border-style: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 700;
+}
+span {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+input[type="number"] {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border-color: inherit;
+    border-style: none;
+    outline: none;
+    background: #ffffff;
+}
+select{
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border-color: inherit;
+    border-style: none;
+    outline: none;
+}
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #0056b3;
+}
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+}
+.dark-mode {
+    background: #353536;
+    color: #fff;
+}
+.dark-mode .container {
+    background: #353536;
+    box-shadow:  41px 41px 82px #2d2d2e, -41px -41px 82px #3d3d3e;
+}
+.newCalcBut{
+    background: #4a92e0;
+}
+a{
+    color: #333;
+}
+.dark-mode a{
+    color: white;
+}
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#darkModeToggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 20px;
+}
+
+.text-4xl{
+    font-size: 2rem;
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    input[type="number"] {
+        width: 100%;
+        max-width: 100%;
+    }
+    #darkModeToggle {
+        top: 10px;
+        right: 10px;
+    }
+}
+
+@media not all and (min-width: 1024px) { 
+    .container{
+        width: 60%;
+        padding-block: 5rem;
+        font-size: larger;
+    }
+    .text-6xl{
+        font-size: 3.5rem;
+    }
+    input{
+        font-size: 1.5rem;
+    }
+    button{
+        font-size: 1.5rem;
+        padding: 10px 20px;
+    }
+}
