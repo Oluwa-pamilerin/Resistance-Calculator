@@ -3,222 +3,49 @@
 <head>
     <title>Resistance Calculator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 20px;
-            transition: background-color 0.3s, color 0.3s;
-            position: relative;
-        }
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="number"] {
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-        select{
-            margin: 5px;
-            padding-inline: 3px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 10px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        .dark-mode {
-            background-color: #080808;
-            color: #fff;
-        }
-        .dark-mode .container {
-            background-color: #333333;
-        }
-        .newCalcBut{
-            background-color: #4a92e0;
-        }
-        a{
-            color: #333;
-        }
-        .dark-mode a{
-            color: white;
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        #darkModeToggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            margin: 20px;
-        }
-
-
-        /* Mobile responsiveness */
-        @media (max-width: 600px) {
-            input[type="number"] {
-                width: 100%;
-                max-width: 100%;
-            }
-            #darkModeToggle {
-                top: 10px;
-                right: 10px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container" id="app">
-    <button onclick="toggleDarkMode()" id="darkModeToggle"><i class="fas fa-sun"></i></button>
-<br>
-    <h2>Resistance Calculator</h2>
+    <div class="container " id="app">
+        <div>
+            <button onclick="toggleDarkMode()" id="darkModeToggle"><i class="fas fa-sun"></i></button>
+            <br>
+            <h2 class="text-4xl text-6xl">Resistance Calculator</h2>
 
-    <div id="inputs">
-        <div class="input-group">
-            <label for="resistance1">Resistance 1 (ohms):</label>
-            <input type="number" id="firstResistance" class="resistance-input">
+            <div id="inputs">
+                <div class="input-group">
+                    <label for="resistance1" class="">Resistance 1 (ohms):</label>
+                    <input type="number" id="firstResistance" class="resistance-input">
+                </div>
+            </div>
+            <div class="">
+                <span for="connectionType" class="">Connection Type:</span>
+                <select id="connectionType">
+                    <option value="parallel">Parallel</option>
+                    <option value="series">Series</option>
+                </select>
+            </div>
+            <div>
+                <button onclick="addNewInput()">Add Resistance</button>
+            </div>
+
+
+            <button onclick="processResult()">Calculate</button>
+            <button class="newCalcBut" onclick="newCalculation()">New Calculation</button>
+
+            <div id="result"></div>
+
+            <footer>
+                Built with ❤️ by <a target=”_blank” href="https://timportfolio.vercel.app/">OTS</a>
+            </footer>
+            <footer>
+                <a id="github" target=”_blank” href="https://github.com/Oluwa-pamilerin/Resistance-Calculator.git">Clone Github Repo</a>
+            </footer>
         </div>
-        <!-- <br><br> -->
-        <!-- <div class="input-group">
-            <label for="resistance2">Resistance 2 (ohms):</label>
-            <input type="number" class="resistance-input">
-        </div> -->
-    </div>
-    <span for="connectionType">Connection Type:</span>
-    <select id="connectionType">
-        <option value="parallel">Parallel</option>
-        <option value="series">Series</option>
-    </select>
-    <div>
-        <button onclick="addNewInput()">Add Resistance</button>
     </div>
 
-
-    <button onclick="processResult()">Calculate</button>
-    <button class="newCalcBut" onclick="newCalculation()">New Calculation</button>
-
-    <div id="result"></div>
-
-    <footer>
-        Built with ❤️ by <a target=”_blank” href="https://timportfolio.vercel.app/">OTS</a>
-    </footer>
-    <footer>
-        <a id="github" target=”_blank” href="https://github.com/Oluwa-pamilerin/Resistance-Calculator.git">Clone Github Repo</a>
-    </footer>
-</div>
-
-<script>
-    // Initialize dark mode from local storage
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-moon"></i>';
-    }
-
-    function addNewInput() {
-        var inputsDiv = document.getElementById('inputs');
-        var newInputGroup = document.createElement('div');
-        newInputGroup.className = 'input-group';
-        newInputGroup.innerHTML = '<label for="resistance" class="new-label elementToRemove">Resistance (ohms):</label><input type="number" class="resistance-input elementToRemove">';
-        inputsDiv.appendChild(newInputGroup);
-    }
-
-    function dataCollection() {
-        var inputs = document.querySelectorAll('.resistance-input');
-        var resistances = Array.from(inputs).map(input => parseFloat(input.value));
-        var connectionType = document.getElementById('connectionType').value;
-        return [connectionType, resistances]
-    }
-    
-    function calculateResistance() {
-        data = dataCollection()
-        connectionType = data[0]
-        resistances = data[1]
-
-        var result;
-
-        if (connectionType === 'parallel') {
-            result = 1 / resistances.reduce((accumulator, resistance) => accumulator + (1 / resistance), 0);
-        } else {
-            result = resistances.reduce((accumulator, resistance) => accumulator + resistance, 0);
-        }
-        return result;
-    }
-    
-    function processResult() {
-        result = calculateResistance()
-
-        // remove all resistance apart from first resistance
-        var elementToRemove = document.querySelectorAll('.elementToRemove');
-        elementToRemove.forEach((element)=>{
-            element.remove();
-        });
-
-        // set first resistance to resultant resistance value so as to continue calculation
-        var firstResistance = document.getElementById('firstResistance')
-        firstResistance.value = result
-
-        document.getElementById('result').innerHTML = 'Resultant Resistance: <b><b>' + result.toFixed(2) + '</b></b> ohms';
-    }
-
-    function newCalculation() {
-        // Check if dark mode is enabled from local storage and apply
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-moon"></i>';
-        } else {
-            document.body.classList.remove('dark-mode');
-            document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-        }
-        location.reload();
-    }
-
-    function toggleDarkMode() {
-        var body = document.body;
-        var darkModeToggle = document.getElementById('darkModeToggle');
-        var icon = darkModeToggle.querySelector('i');
-
-        if (body.classList.contains('dark-mode')) {
-            body.classList.remove('dark-mode');
-            localStorage.setItem('darkMode', 'false');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            body.classList.add('dark-mode');
-            localStorage.setItem('darkMode', 'true');
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    }
-</script>
+<script script src="index.js"></script>
 
 </body>
 </html>
